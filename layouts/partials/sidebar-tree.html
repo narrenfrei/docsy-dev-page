@@ -1,0 +1,89 @@
+{{/* We cache this partial for bigger sites and set the active class client side. */}}
+{{ $shouldDelayActive := ge (len .Site.Pages) 2000 }}
+<div id="td-sidebar-menu" class="td-sidebar__inner{{ if $shouldDelayActive }} d-none{{ end }}">
+  {{ if not .Site.Params.ui.sidebar_search_disable }}
+  <form class="td-sidebar__search d-flex align-items-center">
+    {{ partial "search-input.html" . }}
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  {{ else }}
+  <div id="content-mobile">
+  <form class="td-sidebar__search d-flex align-items-center">
+    {{ partial "search-input.html" . }}
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  </div>
+  <div id="content-desktop"></div>
+  {{ end }}
+
+  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+    {{ if  (gt (len .Site.Home.Translations) 0) }}
+    <div class="nav-item dropdown d-block d-lg-none">
+      {{ partial "navbar-lang-selector.html" . }}
+    </div>
+    {{ end }}
+    
+    {{ $navRoot := cond (and (ne .Params.toc_root true) (eq .Site.Home.Type "docs")) .Site.Home .FirstSection }}
+    {{ $ulNr := 0 }}
+
+    <ul class="td-sidebar-nav__section pr-md-3 ul-{{ $ulNr }}">
+        {{ template "section-tree-nav-section" (dict "page" . "section" $navRoot "delayActive" $shouldDelayActive "ulNr" $ulNr)  }}
+    </ul>
+  </nav>
+</div>
+
+{{ define "section-tree-nav-section" }}
+{{ $s := .section }}
+{{ $p := .page }}
+{{ $shouldDelayActive := .delayActive }}
+{{ $active := eq $p.CurrentSection $s }}
+{{ $show := or (and (not $p.Site.Params.ui.sidebar_menu_compact) ($p.IsAncestor $s)) ($p.IsDescendant $s) }}
+{{ $sid := $s.RelPermalink | anchorize }}
+{{ $ulNr := add .ulNr 1 }}
+{{ $pages := where (union $s.Pages $s.Sections).ByWeight ".Params.toc_hide" "!=" true }}
+{{ $pages := $pages | first 50 }}
+
+  {{if gt (len $pages) 0}}
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-sib" id="{{ $sid }}">
+      <span {{ if $active }} id="td-sidebar-nav-active-item" {{ end }}><a  href="{{ $s.RelPermalink }}" class="align-left pl-0 pr-2{{ if not $show }} collapsed{{ end }}{{ if $active}} active{{ end }} td-sidebar-link td-sidebar-link__section">{{ $s.LinkTitle }}</a></span>
+      <ul class="pr-md-3 ul-{{ $ulNr }}">
+
+        {{ range $pages }}
+          {{ if (not (and (eq $s $p.Site.Home) (eq .Params.toc_root true))) }}
+            {{ if .IsPage }}
+              {{ $mid := printf "m-%s" (.RelPermalink | anchorize) }}
+              {{ $active := eq . $p }}
+                <li class="collapse {{ if $show }}show{{ end }} without-sib" id="{{ $mid }}">
+                  <span {{ if and (not $shouldDelayActive) $active }} id="td-sidebar-nav-active-item" {{ end }}>
+                    {{ if .Params.externalLink }}
+                      {{ $externalLinkOrig := .Params.externalLink }}
+                      <a class="td-sidebar-link td-sidebar-link__page {{ if and (not $shouldDelayActive) $active }} active{{ end }}" id="{{ $mid }}-a" href="{{$externalLinkOrig}}" {{ if .Params.externalLinkTitle }}title="{{ .Params.externalLinkTitle }}"{{ end }} {{ if .Params.externalLinkTarget }}target="{{ .Params.externalLinkTarget }}"{{ if eq .Params.externalLinkTarget "_blank" }} rel=noopener {{ end }}{{ end }}>{{ .LinkTitle }}</a>
+                    {{ else if .Params.externalLinkRelref }}
+                      {{ $externalLinkOrig := .Params.externalLinkRelref }}
+                      <a class="td-sidebar-link td-sidebar-link__page {{ if and (not $shouldDelayActive) $active }} active{{ end }}" id="{{ $mid }}-a" href="{{ relref . $externalLinkOrig }}" {{ if .Params.externalLinkTitle }}title="{{ .Params.externalLinkTitle }}"{{ end }} {{ if .Params.externalLinkTarget }}target="{{ .Params.externalLinkTarget }}"{{ if eq .Params.externalLinkTarget "_blank" }} rel=noopener {{ end }}{{ end }}>{{ .LinkTitle }}</a>
+                    {{ else }}
+                      <a class="td-sidebar-link td-sidebar-link__page {{ if and (not $shouldDelayActive) $active }} active{{ end }}" id="{{ $mid }}-a" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                    {{ end }}
+                  </span>
+                </li>
+            {{ else }}
+              {{ template "section-tree-nav-section" (dict "page" $p "section" . "ulNr" $ulNr) }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+
+      </ul>
+    </li>
+  {{ else }}
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-sib" id="{{ $sid }}">
+      <span {{ if and (not $shouldDelayActive) $active }} id="td-sidebar-nav-active-item" {{ end }}> <a  href="{{ $s.RelPermalink }}" class="align-left pl-0 pr-2{{ if not $show }} collapsed{{ end }}{{ if $active}} active{{ end }} td-sidebar-link td-sidebar-link__section">{{ $s.LinkTitle }}</a></span>
+    </li>
+  {{ end }}
+{{ end }}
+
+<script>
+var myElement = document.getElementById('td-sidebar-nav-active-item');
+myElement.scrollIntoView();
+</script>
