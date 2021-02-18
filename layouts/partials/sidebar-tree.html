@@ -84,7 +84,11 @@
 {{ end }}
 
 <script>
-var myElement = document.getElementById('td-sidebar-nav-active-item');
-myElement.scrollIntoView();
-$(window).scrollTop(0);
+  var activeElement = document.getElementById('td-sidebar-nav-active-item');
+  var topPos = activeElement.offsetTop;
+  var scrollElement = document.getElementById('td-section-nav');
+  var topCor = scrollElement.offsetTop;
+  var heightCor = scrollElement.clientHeight;
+  var scrollValue = topPos-topCor-heightCor/2;
+  scrollElement.scrollTop = scrollValue;
 </script>
