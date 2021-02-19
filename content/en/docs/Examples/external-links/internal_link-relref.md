@@ -11,4 +11,6 @@ description: >
   Internal link to following page: [about]({{% relref "about" %}} "internal link")
 ---
 
+The link in the page (which uses alsoe the relref function of Hugo) description doesn't render correct, because the page description get markdownified and markdownify doesn't replace shortcodes.
+
 [about]({{< relref "about" >}} "internal link")
