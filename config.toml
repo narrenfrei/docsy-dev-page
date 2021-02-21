@@ -83,6 +83,9 @@ time_format_blog = "2006.01.02"
       style = "tango"
       # Uncomment if you want your chosen highlight style used for code blocks without a specified language
       # guessSyntax = "true"
+  [markup.tableOfContents]
+    endLevel = 6
+    startLevel = 1
 
 # Everything below this are Site Params
 
@@ -142,7 +145,9 @@ prism_syntax_highlighting = false
 # User interface configuration
 [params.ui]
 # Enable to show the side bar menu in its compact state.
-sidebar_menu_compact = false
+sidebar_menu_compact = true
+sidebar_menu_foldable = true
+sidebar_menu_unfold_depth = 1
 #  Set to true to disable breadcrumb navigation.
 breadcrumb_disable = false
 #  Set to true to hide the sidebar search box (the top nav search box will still be displayed if search is enabled)
