@@ -6,6 +6,10 @@ assets/scss/_styles_project.scss
 
 */
 
+#td-section-nav {
+  position: relative;
+}
+
 #td-section-nav label {
   margin-bottom: 0;
 }
@@ -56,9 +60,20 @@ assets/scss/_styles_project.scss
 /* (B) SUB-SECTIONS */
 /* (B1) TOGGLE SHOW/HIDE */
 .with-sib ul { 
-  display: none; 
+  // display: none; 
+  max-height: 0;
+  // overflow-x: visible;
+  // overflow-y: hidden;
+  overflow: hidden;
+  // opacity: 0;
+  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
 }
-.with-sib input:checked ~ ul { display: block; }
+.with-sib input:checked ~ ul { 
+  // display: block; 
+  max-height: 100vmax;
+  // opacity: 1;
+  transition: max-height 1s ease-in-out;
+}
 
 /* (B2) HIDE CHECKBOX */
 .with-sib input[type=checkbox] { display: none; }
@@ -66,8 +81,11 @@ assets/scss/_styles_project.scss
 /* (B3) ADD EXPAND/COLLAPSE ICON  */
 .with-sib, .without-sib { 
   position: relative; 
-  padding-left: 0.5em;
+  padding-left: 1.5em;
 }
+// .ul-1 .with-sib label {
+//   display: inline !important;
+// }
 // .without-sib span:after,
 .ul-1 .with-sib label:before {
   display: inline-block;
@@ -80,7 +98,7 @@ assets/scss/_styles_project.scss
   // transform: rotate(90deg);
   position: absolute;
   // top: -0.8em; 
-  left: -1em;
+  left: 0.1em;
   // padding: 0.4em;
   // text-align: center;
   font-size: 1em;
@@ -90,9 +108,11 @@ assets/scss/_styles_project.scss
 .ul-1 .with-sib input:checked ~ label:before { 
   color: $primary;
   transform: rotate(90deg);
+  // content: "\f13a";
+  transition: transform 0.5s; 
 }
 .ul-1 > li.with-sib > label:before {
-  left: 0;
+  left: 0.1;
 }
 
 /* (B4) SUB-SECTION ITEMS */
