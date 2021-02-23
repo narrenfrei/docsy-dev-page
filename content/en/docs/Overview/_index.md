@@ -2,6 +2,7 @@
 title: "Overview"
 linkTitle: "Overview"
 weight: 1
+icon: fas fa-globe
 description: >
   Here's where your user finds out if your project is for them.
 ---

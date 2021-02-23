@@ -22,12 +22,12 @@
                     <h5>
                         {{ if .Params.externalLink }}
                           {{ $externalLinkOrig := .Params.externalLink }}
-                          <a href="{{$externalLinkOrig}}" {{ if .Params.externalLinkTitle }}title="{{ .Params.externalLinkTitle }}"{{ end }} {{ if .Params.externalLinkTarget }}target="{{ .Params.externalLinkTarget }}"{{ if eq .Params.externalLinkTarget "_blank" }} rel=noopener {{ end }}{{ end }}>{{- .Title -}}</a>
+                          <a href="{{$externalLinkOrig}}" {{ if .Params.externalLinkTitle }}title="{{ .Params.externalLinkTitle }}"{{ end }} {{ if .Params.externalLinkTarget }}target="{{ .Params.externalLinkTarget }}"{{ if eq .Params.externalLinkTarget "_blank" }} rel=noopener {{ end }}{{ end }}>{{ with .Params.Icon}}<i class="{{.}}"></i>{{ end }}{{- .Title -}}</a>
                         {{ else if .Params.externalLinkRelref }}
                           {{ $externalLinkOrig := .Params.externalLinkRelref }}
-                          <a href="{{ relref . $externalLinkOrig }}" {{ if .Params.externalLinkTitle }}title="{{ .Params.externalLinkTitle }}"{{ end }} {{ if .Params.externalLinkTarget }}target="{{ .Params.externalLinkTarget }}"{{ if eq .Params.externalLinkTarget "_blank" }} rel=noopener {{ end }}{{ end }}>{{- .Title -}}</a>
+                          <a href="{{ relref . $externalLinkOrig }}" {{ if .Params.externalLinkTitle }}title="{{ .Params.externalLinkTitle }}"{{ end }} {{ if .Params.externalLinkTarget }}target="{{ .Params.externalLinkTarget }}"{{ if eq .Params.externalLinkTarget "_blank" }} rel=noopener {{ end }}{{ end }}>{{ with .Params.Icon}}<i class="{{.}}"></i>{{ end }}{{- .Title -}}</a>
                         {{ else }}
-                          <a href="{{ .RelPermalink }}">{{- .Title -}}</a>
+                          <a href="{{ .RelPermalink }}">{{ with .Params.Icon}}<i class="{{.}}"></i>{{ end }}{{- .Title -}}</a>
                         {{ end }}
                     </h5>
                     <p>{{ .Description | markdownify }}</p>

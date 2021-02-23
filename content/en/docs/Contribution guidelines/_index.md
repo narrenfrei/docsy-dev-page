@@ -2,6 +2,7 @@
 title: "Contribution Guidelines"
 linkTitle: "Contribution Guidelines"
 weight: 10
+icon: fas fa-indent
 description: >
   How to contribute to the docs
 ---

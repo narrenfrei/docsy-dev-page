@@ -4,6 +4,7 @@ title: "Tutorials"
 linkTitle: "Tutorials"
 weight: 8
 date: 2017-01-04
+icon: fas fa-hands-helping
 description: >
   Show your user how to work through some end to end examples.
 ---

@@ -66,12 +66,13 @@ active: {{ printf "%#v" $active }} -  -->
   {{if gt (len $pages) 0}}
     <li class="section td-sidebar-nav__section-title td-sidebar-nav__section with-sib{{ if $activePath}} active-path{{ end }}{{ if not $show }} collapsed{{ end }}" id="{{ $sid }}">
       <input type="checkbox" id="{{ $sid }}-check"{{ if $show}} checked{{ end }}/>
-      <label for="{{ $sid }}-check" {{ if $active }} id="td-sidebar-nav-active-item" {{ end }}><a href="{{ $s.RelPermalink }}" {{ if $treeRoot }}id="tree-root"{{ end }} class="align-left pl-0 pr-2{{ if $active}} active{{ end }} td-sidebar-link td-sidebar-link__section">{{ $s.LinkTitle }}</a></label>
-      <!-- <p>
-        active: {{ printf "%#v" $active }}, 
+      <label for="{{ $sid }}-check" {{ if $active }} id="td-sidebar-nav-active-item" {{ end }}><a href="{{ $s.RelPermalink }}" {{ if $treeRoot }}id="tree-root"{{ end }} class="align-left pl-0 pr-2{{ if $active}} active{{ end }} td-sidebar-link td-sidebar-link__section">{{ with $s.Params.Icon}}<i class="{{$s.Params.Icon}}"></i>{{ end }}{{ $s.LinkTitle }}</a></label>
+      <!-- <p> -->
+        <!-- active: {{ printf "%#v" $active }}, 
         activePath: {{ printf "%#v" $activePath }}, 
-        show: {{ printf "%#v" $show }}, 
-      </p> -->
+        show: {{ printf "%#v" $show }},  -->
+        <!-- icon: {{ printf "%#v" $p }},  -->
+      <!-- </p> -->
       <ul class="ul-{{ $ulNr }}{{ if not $show }} collapsed{{ end }}">
 
         {{ range $pages }}
@@ -85,12 +86,12 @@ active: {{ printf "%#v" $active }} -  -->
                   <span {{ if and (not $shouldDelayActive) $active }} id="td-sidebar-nav-active-item" {{ end }}>
                     {{ if .Params.externalLink }}
                       {{ $externalLinkOrig := .Params.externalLink }}
-                      <a class="td-sidebar-link td-sidebar-link__page {{ if and (not $shouldDelayActive) $active }} active{{ end }}" id="{{ $mid }}-a" href="{{$externalLinkOrig}}" {{ if .Params.externalLinkTitle }}title="{{ .Params.externalLinkTitle }}"{{ end }} {{ if .Params.externalLinkTarget }}target="{{ .Params.externalLinkTarget }}"{{ if eq .Params.externalLinkTarget "_blank" }} rel=noopener {{ end }}{{ end }}>{{ .LinkTitle }}</a>
+                      <a class="td-sidebar-link td-sidebar-link__page {{ if and (not $shouldDelayActive) $active }} active{{ end }}" id="{{ $mid }}-a" href="{{$externalLinkOrig}}" {{ if .Params.externalLinkTitle }}title="{{ .Params.externalLinkTitle }}"{{ end }} {{ if .Params.externalLinkTarget }}target="{{ .Params.externalLinkTarget }}"{{ if eq .Params.externalLinkTarget "_blank" }} rel=noopener {{ end }}{{ end }}>{{ with .Params.Icon}}<i class="{{.}}"></i>{{ end }}{{ .LinkTitle }}</a>
                     {{ else if .Params.externalLinkRelref }}
                       {{ $externalLinkOrig := .Params.externalLinkRelref }}
-                      <a class="td-sidebar-link td-sidebar-link__page {{ if and (not $shouldDelayActive) $active }} active{{ end }}" id="{{ $mid }}-a" href="{{ relref . $externalLinkOrig }}" {{ if .Params.externalLinkTitle }}title="{{ .Params.externalLinkTitle }}"{{ end }} {{ if .Params.externalLinkTarget }}target="{{ .Params.externalLinkTarget }}"{{ if eq .Params.externalLinkTarget "_blank" }} rel=noopener {{ end }}{{ end }}>{{ .LinkTitle }}</a>
+                      <a class="td-sidebar-link td-sidebar-link__page {{ if and (not $shouldDelayActive) $active }} active{{ end }}" id="{{ $mid }}-a" href="{{ relref . $externalLinkOrig }}" {{ if .Params.externalLinkTitle }}title="{{ .Params.externalLinkTitle }}"{{ end }} {{ if .Params.externalLinkTarget }}target="{{ .Params.externalLinkTarget }}"{{ if eq .Params.externalLinkTarget "_blank" }} rel=noopener {{ end }}{{ end }}>{{ with .Params.Icon}}<i class="{{.}}"></i>{{ end }}{{ .LinkTitle }}</a>
                     {{ else }}
-                      <a class="td-sidebar-link td-sidebar-link__page {{ if and (not $shouldDelayActive) $active }} active{{ end }}" id="{{ $mid }}-a" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                      <a class="td-sidebar-link td-sidebar-link__page {{ if and (not $shouldDelayActive) $active }} active{{ end }}" id="{{ $mid }}-a" href="{{ .RelPermalink }}">{{ with .Params.Icon}}<i class="{{.}}"></i>{{ end }}{{ .LinkTitle }}</a>
                     {{ end }}
                   </span>
                   <!-- <p>
@@ -109,7 +110,7 @@ active: {{ printf "%#v" $active }} -  -->
     </li>
   {{ else }}
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-sib{{ if $activePath}} active-path{{ end }}{{ if not $show }} collapsed{{ end }}" id="{{ $sid }}">
-      <span {{ if and (not $shouldDelayActive) $active }} id="td-sidebar-nav-active-item" {{ end }}> <a  href="{{ $s.RelPermalink }}" class="align-left pl-0 pr-2{{ if $active}} active{{ end }} td-sidebar-link td-sidebar-link__section">{{ $s.LinkTitle }}</a></span>
+      <span {{ if and (not $shouldDelayActive) $active }} id="td-sidebar-nav-active-item" {{ end }}> <a  href="{{ $s.RelPermalink }}" class="align-left pl-0 pr-2{{ if $active}} active{{ end }} td-sidebar-link td-sidebar-link__section">{{ with $s.Params.Icon}}<i class="{{$s.Params.Icon}}"></i>{{ end }}{{ $s.LinkTitle }}</a></span>
       <!-- <p>
         active: {{ printf "%#v" $active }}, 
         activePath: {{ printf "%#v" $activePath }}, 

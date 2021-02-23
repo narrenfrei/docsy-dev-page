@@ -2,6 +2,7 @@
 title: "Reference"
 linkTitle: "Reference"
 weight: 9
+icon: fas fa-asterisk
 description: >
   Low level reference docs for your project.
 ---
