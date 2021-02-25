@@ -18,7 +18,7 @@
   <div id="content-desktop"></div>
   {{ end }}
 
-  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+  <nav class="collapse td-sidebar-nav foldable-menu" id="td-section-nav">
     {{ if  (gt (len .Site.Home.Translations) 0) }}
     <div class="nav-item dropdown d-block d-lg-none">
       {{ partial "navbar-lang-selector.html" . }}
@@ -66,7 +66,7 @@ active: {{ printf "%#v" $active }} -  -->
   {{if gt (len $pages) 0}}
     <li class="section td-sidebar-nav__section-title td-sidebar-nav__section with-sib{{ if $activePath}} active-path{{ end }}{{ if not $show }} collapsed{{ end }}" id="{{ $sid }}">
       <input type="checkbox" id="{{ $sid }}-check"{{ if $show}} checked{{ end }}/>
-      <label for="{{ $sid }}-check" {{ if $active }} id="td-sidebar-nav-active-item" {{ end }}><a href="{{ $s.RelPermalink }}" {{ if $treeRoot }}id="tree-root"{{ end }} class="align-left pl-0 pr-2{{ if $active}} active{{ end }} td-sidebar-link td-sidebar-link__section">{{ with $s.Params.Icon}}<i class="{{$s.Params.Icon}}"></i>{{ end }}{{ $s.LinkTitle }}</a></label>
+      <label for="{{ $sid }}-check" {{ if $active }} id="td-sidebar-nav-active-item" {{ end }}><a href="{{ $s.RelPermalink }}" class="align-left pl-0 pr-2{{ if $active}} active{{ end }} td-sidebar-link td-sidebar-link__section{{ if $treeRoot }} tree-root{{ end }}">{{ with $s.Params.Icon}}<i class="{{$s.Params.Icon}}"></i>{{ end }}{{ $s.LinkTitle }}</a></label>
       <!-- <p> -->
         <!-- active: {{ printf "%#v" $active }}, 
         activePath: {{ printf "%#v" $activePath }}, 
